@@ -1,6 +1,17 @@
 import './style.css';
 import * as THREE from 'three';
 
+// CURSOR
+const cursor = {
+  x: 0,
+  y: 0,
+};
+
+window.addEventListener('mousemove', (e) => {
+  cursor.x = e.clientX / sizes.width - 0.5;
+  cursor.y = -(e.clientY / sizes.height - 0.5);
+});
+
 /**
  * Base
  */
@@ -24,19 +35,19 @@ const mesh = new THREE.Mesh(
 scene.add(mesh);
 
 // Camera
-// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
-const aspectRatio = sizes.width / sizes.height;
-const camera = new THREE.OrthographicCamera(
-  -1 * aspectRatio,
-  1 * aspectRatio,
-  1,
-  -1,
-  0.1,
-  100
-);
-camera.position.x = 2;
-camera.position.y = 2;
-camera.position.z = 2;
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
+// const aspectRatio = sizes.width / sizes.height;
+// const camera = new THREE.OrthographicCamera(
+//   -1 * aspectRatio,
+//   1 * aspectRatio,
+//   1,
+//   -1,
+//   0.1,
+//   100
+// );
+// camera.position.x = 2;/
+// camera.position.y = 2;
+camera.position.z = 3;
 camera.lookAt(mesh.position);
 scene.add(camera);
 
@@ -50,10 +61,15 @@ renderer.setSize(sizes.width, sizes.height);
 const clock = new THREE.Clock();
 
 const tick = () => {
-  const elapsedTime = clock.getElapsedTime();
+  //   const elapsedTime = clock.getElapsedTime();
 
   // Update objects
-  mesh.rotation.y = elapsedTime;
+  //   mesh.rotation.y = elapsedTime;
+
+  //   UPDATE CAMERA (move the camera according to the current position)
+  camera.position.x = cursor.x * 3;
+  camera.position.y = cursor.y * 3;
+  camera.lookAt(mesh.position);
 
   // Render
   renderer.render(scene, camera);
