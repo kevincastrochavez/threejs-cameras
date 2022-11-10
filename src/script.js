@@ -1,5 +1,6 @@
 import './style.css';
 import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 // CURSOR
 const cursor = {
@@ -35,7 +36,6 @@ const mesh = new THREE.Mesh(
 scene.add(mesh);
 
 // Camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
 // const aspectRatio = sizes.width / sizes.height;
 // const camera = new THREE.OrthographicCamera(
 //   -1 * aspectRatio,
@@ -47,7 +47,14 @@ const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
 // );
 // camera.position.x = 2;/
 // camera.position.y = 2;
+
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
+camera.position.z = 3;
 scene.add(camera);
+
+// CONTROLLS
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
@@ -63,6 +70,7 @@ const tick = () => {
 
   // Update objects
   //   mesh.rotation.y = elapsedTime;
+  controls.update(); // Update controls on evey frame
 
   //   UPDATE CAMERA (move the camera according to the current position)
   camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 3;
