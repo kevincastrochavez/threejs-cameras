@@ -47,8 +47,6 @@ const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
 // );
 // camera.position.x = 2;/
 // camera.position.y = 2;
-camera.position.z = 3;
-camera.lookAt(mesh.position);
 scene.add(camera);
 
 // Renderer
@@ -58,7 +56,7 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height);
 
 // Animate
-const clock = new THREE.Clock();
+// const clock = new THREE.Clock();
 
 const tick = () => {
   //   const elapsedTime = clock.getElapsedTime();
@@ -67,8 +65,9 @@ const tick = () => {
   //   mesh.rotation.y = elapsedTime;
 
   //   UPDATE CAMERA (move the camera according to the current position)
-  camera.position.x = cursor.x * 3;
-  camera.position.y = cursor.y * 3;
+  camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 3;
+  camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 3;
+  camera.position.y = cursor.y * 5;
   camera.lookAt(mesh.position);
 
   // Render
